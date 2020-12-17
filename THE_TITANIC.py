@@ -39,6 +39,12 @@ def click(event):
     y = df['Survived'].values
 
     xtr, xt, ytr, yt = train_test_split(x, y, test_size=0.3, random_state=42)
+    
+    from sklearn.model_selection import StratifiedKFold
+    kf = StratifiedKFold(n_splits=50)
+
+    for ti, tti in kf.split(x, y):
+        xtr, xt, ytr, yt = x[ti], x[tti], y[ti], y[tti]
 
     model = LogisticRegression()
     model.fit(x, y)
